@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var tally = 0
+    private var tally = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,15 +19,11 @@ class MainActivity : AppCompatActivity() {
         // Should not use Snackbar
         upvotebutton.setOnClickListener { view ->
             tally++
-            Snackbar.make(view, "Tally is $tally",
-                    Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            display.text = "$tally"
         }
         downvotebutton.setOnClickListener { view ->
             tally--
-            Snackbar.make(view, "Tally is $tally",
-                    Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            display.text = "$tally"
         }
     }
 
