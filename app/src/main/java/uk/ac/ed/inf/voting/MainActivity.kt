@@ -1,7 +1,7 @@
 package uk.ac.ed.inf.voting
 
+import android.content.Context
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -11,20 +11,36 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var tally = 0
+    private val prefsFile = "MyPrefsFile"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         // Should not use Snackbar
-        upvotebutton.setOnClickListener { view ->
+        upvotebutton.setOnClickListener { _ ->
             tally++
             display.text = "$tally"
         }
-        downvotebutton.setOnClickListener { view ->
+        downvotebutton.setOnClickListener { _ ->
             tally--
             display.text = "$tally"
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val settings = getSharedPreferences(prefsFile, Context.MODE_PRIVATE)
+        tally = settings.getInt("storedTally", 0)
+        display.text = "$tally"
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val settings = getSharedPreferences(prefsFile, Context.MODE_PRIVATE)
+        val editor = settings.edit()
+        editor.putInt("storedTally", tally)
+        editor.apply()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
