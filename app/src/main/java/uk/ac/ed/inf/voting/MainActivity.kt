@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        // Should not use Snackbar
+
         upvotebutton.setOnClickListener { _ ->
             tally++
             display.text = "$tally"
